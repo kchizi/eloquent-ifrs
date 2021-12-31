@@ -108,7 +108,7 @@ class ReportingPeriod extends Model implements Segregatable, Recyclable
                 $allentityperiods = ReportingPeriod::where('entity_id',$entity->id)->get();
                 $periodcount = $allentityperiods->count();
                 $periodcount = $periodcount+1;
-                $period = ReportingPeriod::create(['period_count'=>$periodcount,'calendar_year'=>$year, $entity]);
+                $period = ReportingPeriod::create(['period_count'=>$periodcount,'calendar_year'=>$year, 'entity_id'=>$entity->id]);
             }
 
             throw new MissingReportingPeriod($entity->name, $year);
