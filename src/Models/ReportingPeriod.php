@@ -102,16 +102,16 @@ class ReportingPeriod extends Model implements Segregatable, Recyclable
             ->where('entity_id', '=', $entity->id)->first();
         if (is_null($period)) {
             //if transaction year is in current year create new period else fail
-            $now = \Carbon::now();
-            $currentyear = $now->year;
-            if($currentyear == $year){
+            $transactiondate = \Carbon::parse($date);
+            if($transactiondate->isPast() || $transactiondate->isToday()){
                 $allentityperiods = ReportingPeriod::where('entity_id',$entity->id)->get();
                 $periodcount = $allentityperiods->count();
                 $periodcount = $periodcount+1;
                 $period = ReportingPeriod::create(['period_count'=>$periodcount,'calendar_year'=>$year, 'entity_id'=>$entity->id]);
-            }
+            }else{
 
             throw new MissingReportingPeriod($entity->name, $year);
+            }
         }
         return $period;
     }
