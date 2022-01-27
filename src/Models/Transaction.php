@@ -688,7 +688,7 @@ class Transaction extends Model implements Segregatable, Recyclable, Clearable, 
         $period = ReportingPeriod::getPeriod(Carbon::parse($this->transaction_date), $entity);
 
         if (ReportingPeriod::periodStart($this->transaction_date, $entity)->eq(Carbon::parse($this->transaction_date))) {
-            throw new InvalidTransactionDate();
+            //throw new InvalidTransactionDate();
         }
 
         if ($period->status == ReportingPeriod::CLOSED) {
